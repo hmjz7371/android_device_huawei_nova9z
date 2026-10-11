@@ -1,0 +1,36 @@
+# ============================================================================
+# recovery.fstab —— 真值，源自设备 /vendor/etc/fstab.emmc（已 dump，见 fstabzip/）
+# 分区设备节点使用 QCOM 真实路径 /dev/block/bootdevice/by-name/
+# 动态分区设备：system/vendor/product/odm/system_ext 均为 logical（super 内逻辑分区）
+# userdata 为 f2fs（inlinecrypt 加密）；本机为非 A/B 设备（无 *_a/*_b、无 slotselect）
+# 第 6 列为 TWRP 专有 flags（backup/flashimg/wipe 等）
+# ============================================================================
+
+# --- 动态分区（super 内逻辑分区，TWRP 经 /super 映射后挂载） ---
+/dev/block/bootdevice/by-name/super        /super        emmc    defaults                     logical,system
+/dev/block/bootdevice/by-name/system       /system       ext4    ro,barrier=1,wait            wait,logical,flags=backup=1
+/dev/block/bootdevice/by-name/system_ext   /system_ext   ext4    ro,barrier=1,wait            wait,logical
+/dev/block/bootdevice/by-name/vendor       /vendor       ext4    ro,barrier=1,wait            wait,logical
+/dev/block/bootdevice/by-name/product      /product      ext4    ro,barrier=1,wait            wait,logical
+/dev/block/bootdevice/by-name/odm          /odm          ext4    ro,barrier=1,wait            wait,logical
+
+# --- 数据与缓存 ---
+/dev/block/bootdevice/by-name/userdata     /data         f2fs    nosuid,nodev,noatime,discard,inlinecrypt    latemount,wait,check,encryptable=footer,flags=backup=1;wipeingui=1
+/dev/block/bootdevice/by-name/cache        /cache        ext4    nosuid,nodev,noatime,discard                wait,flags=wipeingui=1
+/dev/block/bootdevice/by-name/metadata     /metadata     ext4    noatime,nosuid,nodev,discard                wait,formattable,first_stage_mount
+/dev/block/bootdevice/by-name/persist      /persist      ext4    noatime,nosuid,nodev,barrier=1              wait
+
+# --- boot / recovery / 杂项 ---
+/dev/block/bootdevice/by-name/boot         /boot         emmc    defaults                     defaults,flags=backup=1;flashimg=1
+/dev/block/bootdevice/by-name/recovery     /recovery     emmc    defaults                     defaults,flags=backup=1;flashimg=1
+/dev/block/bootdevice/by-name/misc         /misc         emmc    defaults                     defaults
+/dev/block/bootdevice/by-name/vbmeta       /vbmeta       emmc    defaults                     defaults
+/dev/block/bootdevice/by-name/dtbo         /dtbo         emmc    defaults                     defaults
+/dev/block/bootdevice/by-name/modem        /modem        vfat    ro,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337    wait
+/dev/block/bootdevice/by-name/dsp          /dsp          ext4    ro,nosuid,nodev,barrier=1    wait
+/dev/block/bootdevice/by-name/bluetooth    /bt_firmware  vfat    ro,shortname=lower,uid=1002,gid=3002,dmask=227,fmask=337    wait
+
+# --- 外置存储（SD 卡 / U 盘，vold 托管） ---
+/devices/platform/soc/8804000.sdhci/mmc_host*              /external_sd   vfat   nosuid,nodev   wait,voldmanaged=sdcard1:auto
+/devices/platform/soc/1da4000.ufshc_card/host*             /external_sd   vfat   nosuid,nodev   wait,voldmanaged=sdcard1:auto
+/devices/platform/soc/a600000.ssusb/a600000.dwc3/xhci-hcd.*.auto*  /usb-otg  vfat  nosuid,nodev  wait,voldmanaged=usbotg:auto

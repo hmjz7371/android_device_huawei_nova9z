@@ -1,0 +1,10 @@
+ro.product.odm.brand=qti
+ro.product.odm.name=hiro
+ro.product.odm.device=hiro
+ro.product.first_api_level=30
+
+#LCD CABL
+ro.vendor.display.cabl=2
+ro.vendor.display.paneltype=1
+vendor.display.cabl.config=1
+vendor.display.cabl.config_path=/vendor/odm/etc/display/effect/algorithm/CABLConfig.xml
