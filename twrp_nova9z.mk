@@ -25,12 +25,6 @@ BUILD_FINGERPRINT := Huawei/TRG-AN00/TRG-AN00:11/RP1A.200720.011/root20221012155
 # 真实版本属性（提取自 system build.prop，已确证）
 PRODUCT_BUILD_PROP_OVERRIDES += \
     PRIVATE_BUILD_DESC="TRG-AN00-user 11 RP1A.200720.011 release-keys" \
-    ro.build.id=RP1A.200720.011 \
-    ro.build.version.release=11 \
-    ro.build.version.sdk=30 \
-    ro.build.version.security_patch=2022-05-01 \
-    ro.build.display.id="System 11.0.0(1YAY)" \
-    ro.product.cpu.abi=arm64-v8a
 
 # TWRP 标志（与 BoardConfig 中 TW_* 同步）
 TW_THEME := portrait_hdpi
