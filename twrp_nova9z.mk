@@ -29,7 +29,7 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
     ro.build.version.release=11 \
     ro.build.version.sdk=30 \
     ro.build.version.security_patch=2022-05-01 \
-    ro.build.display.id=System 11.0.0(1YAY) \
+    ro.build.display.id=System 11.0.0(1YAY)" \
     ro.product.cpu.abi=arm64-v8a
 
 # TWRP 标志（与 BoardConfig 中 TW_* 同步）
