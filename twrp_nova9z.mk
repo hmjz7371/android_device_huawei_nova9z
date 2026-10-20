@@ -31,7 +31,7 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
 # TWRP 标志（与 BoardConfig 中 TW_* 同步）
 TW_THEME := portrait_hdpi
 TW_EXTRA_LANGUAGES := true
-TW_SCREEN_BLANK_ON_BOOT := true
+TW_SCREEN_BLANK_ON_BOOT := false
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_USE_TOOLBOX := true
 TW_INCLUDE_CRYPTO := false  # nova9z 无对应 crypto/keymaster 后端，编进来会在 Decrypt_FBE_DE 硬 abort（v9 崩溃循环根因）；关掉让 /data 被干净跳过
