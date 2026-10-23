@@ -32,11 +32,8 @@ PRODUCT_MANUFACTURER := huawei
 BUILD_FINGERPRINT := Huawei/TRG-AN00/TRG-AN00:11/RP1A.200720.011/root202210121554:user/release-keys
 
 # 真实版本属性（提取自 system build.prop，已确证）
+# 注意：PRODUCT_BUILD_PROP_OVERRIDES 会以环境变量前缀形式拼进 bash 命令，
+# 而 bash 变量名不允许带点，ro.* 条目会报 "command not found"，故只保留合法条目；
+# 版本信息由上方 BUILD_FINGERPRINT 与构建系统默认值提供
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    PRIVATE_BUILD_DESC="TRG-AN00-user 11 RP1A.200720.011 release-keys" \
-    ro.build.id=RP1A.200720.011 \
-    ro.build.version.release=11 \
-    ro.build.version.sdk=30 \
-    ro.build.version.security_patch=2022-05-01 \
-    ro.build.display.id=System 11.0.0(1YAY) \
-    ro.product.cpu.abi=arm64-v8a
+    PRIVATE_BUILD_DESC="TRG-AN00-user 11 RP1A.200720.011 release-keys"
