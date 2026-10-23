@@ -36,4 +36,14 @@ BUILD_FINGERPRINT := Huawei/TRG-AN00/TRG-AN00:11/RP1A.200720.011/root20221012155
 # 而 bash 变量名不允许带点，ro.* 条目会报 "command not found"，故只保留合法条目；
 # 版本信息由上方 BUILD_FINGERPRINT 与构建系统默认值提供
 PRODUCT_BUILD_PROP_OVERRIDES += \
+<<<<<<< HEAD
     PRIVATE_BUILD_DESC="TRG-AN00-user 11 RP1A.200720.011 release-keys"
+=======
+    PRIVATE_BUILD_DESC="TRG-AN00-user 11 RP1A.200720.011 release-keys" \
+    ro.build.id=RP1A.200720.011 \
+    ro.build.version.release=11 \
+    ro.build.version.sdk=30 \
+    ro.build.version.security_patch=2022-05-01 \
+    ro.build.display.id="System 11.0.0(1YAY)" \
+    ro.product.cpu.abi=arm64-v8a
+>>>>>>> eea27bbaba2e9618009d3fbbec4806fae895b47f
