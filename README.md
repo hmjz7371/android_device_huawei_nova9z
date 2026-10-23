@@ -44,29 +44,6 @@
 - **签名 = `test-keys`**：vendor 与 bootimage 均为 test-keys（工程/测试签名），system 为 dev-keys，刷入/签名相关需留意。
 - ODM 产品名 `hiro`（`ro.product.odm.name=hiro`），`ro.product.first_api_level=30`。
 
-## dtbo 多 SoC 打包分析（回应「lito+lagoon 混搭」质疑）
-有评审指出：23 个 DTB 中 lito 与 lagoon 并存、`qcom,sm6350` 字面 0 次、TRG-AN00 仅 3 次，
-推断「素材来自多台设备 dump 拼凑」。**实测证伪该结论，实锤为华为单包多机型打包**：
-
-对 `prebuilt/dtbo.img` 全部 23 个 DTB 逐个反编译提取 `qcom,msm-id`（SoC 硬件 ID）：
-
-| msm-id | SoC | 条目 | model |
-|--------|-----|------|-------|
-| `0x190 / 0x1b8` | SM7250 (lito / lito v2) | 11 | Lito MTP/CDP/QRD/ATP/RUMI/LCD ATP |
-| `0x1b2 / 0x1cb` | **SM6350 (lagoon)** | 9 | Lagoon MTP/CDP/QRD/ATP/RUMI |
-| `0x1dc` | Orchid 平台 | 2 | Orchid MTP/CDP |
-| — | Litomagnus 变体 | 2 | Litomagnus CDP/MTP |
-
-**决定性证据**：`TRG-AN00` 字符串**只出现在 msm-id=0x1b2（SM6350）的 Lagoon QRD 条目里**（3 处），
-全部 11 个 lito 条目均不含 TRG-AN00。所有文件源自**同一台真机** root 提取（非拼凑），因此：
-- 这台机器的物理 SoC 就是 **SM6350**（bootloader 按 msm-id 匹配，只会加载 Lagoon 系 DTB）；
-- lito/orchid 的 DTB 是华为「一份固件包覆盖多 SoC 家族机型」打包习惯的产物，配套的多平台通用内核
-  （内核串 `lagoon`×22、`lito`×33 并存）与多 SoC dtbo 是一体设计，与 vendor 复用 lito 参考栈相互印证；
-- `qcom,sm6350` 字面 0 次是正常现象：高通 DT 用内部代号 `lagoon` 而非市场名 SM6350。
-
-**结论**：`TARGET_BOARD_PLATFORM := sm6350` 维持不变，与硬件 msm-id 一致；评审观察到的现象真实，
-但解释应为华为固件打包方式，而非多设备拼凑。
-
 ## super 分区（真值）
 - `BOARD_SUPER_PARTITION_SIZE := 7314866176`（super.img dump 实测 6.81G）
 - `BOARD_HUAWEI_DYNAMIC_PARTITIONS_SIZE := 7310671872`（= super − 4 MiB 元数据）

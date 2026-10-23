@@ -1,9 +1,9 @@
-// Copyright (C) 2022 The Android Open Source Project
-// Copyright (C) 2022 SebaUbuntu's TWRP device tree generator
-//
-// SPDX-License-Identifier: Apache-2.0
-//
-// 注意：Android.bp 是 Soong 配置，注释只能用 //，不能用 Make 的 #
+#
+# Copyright (C) 2022 The Android Open Source Project
+# Copyright (C) 2022 SebaUbuntu's TWRP device tree generator
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 soong_namespace {
 }

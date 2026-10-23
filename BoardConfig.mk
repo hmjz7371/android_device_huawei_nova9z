@@ -29,7 +29,7 @@ TARGET_SCREEN_DENSITY := 480
 
 # Kernel（cmdline 为 recovery.img 内核真实提取；base/pagesize 见下）
 BOARD_KERNEL_BASE := 0x80000000
-BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom androidboot.console=ttyMSM0 androidboot.memcg=1 lpm_levels.sleep_disabled=1 msm_rtb.filter=0x237 service_locator.enable=1 androidboot.usbcontroller=a600000.dwc3 swiotlb=2048 cgroup.memory=nokmem,nosocket loop.max_part=7 androidboot.selinux=permissive buildvariant=user
+BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom androidboot.console=ttyMSM0 androidboot.memcg=1 lpm_levels.sleep_disabled=1 video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 service_locator.enable=1 androidboot.usbcontroller=a600000.dwc3 swiotlb=2048 cgroup.memory=nokmem,nosocket loop.max_part=7 androidboot.selinux=permissive buildvariant=user
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_IMAGE_NAME := Image
 # 非 A/B 设备（fstab.emmc 无 *_a/*_b、无 slotselect），禁用 A/B 相关
@@ -70,12 +70,9 @@ TARGET_USERIMAGES_USE_F2FS := true
 # TWRP Configuration
 TW_THEME := portrait_hdpi
 TW_EXTRA_LANGUAGES := true
-TW_SCREEN_BLANK_ON_BOOT := false
+TW_SCREEN_BLANK_ON_BOOT := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_USE_TOOLBOX := true
 
-# Graphics pixel format fix (nova9z): without a RECOVERY_* macro, graphics_drm.cpp
-# falls into the #else branch -> DRM_FORMAT_RGB565 (16bpp alloc) but
-# GGL_PIXEL_FORMAT_BGRA_8888 (32bpp render) -> 2x heap overflow at splash (MTE SEGV_ACCERR).
-# RECOVERY_BGRA selects a consistent 32bpp path.
-RECOVERY_BGRA := true
+# 像素格式：sm6350 的 SDE/DRM 面板需要 BGRA，否则 recovery 背光亮但屏幕不显
+TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
