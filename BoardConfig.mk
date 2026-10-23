@@ -75,4 +75,5 @@ TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_USE_TOOLBOX := true
 
 # 像素格式：sm6350 的 SDE/DRM 面板需要 BGRA，否则 recovery 背光亮但屏幕不显
+# 此宏为编译期宏，仅在使用本设备树从 TWRP 源码重编 recovery 二进制时生效
 TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
