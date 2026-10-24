@@ -38,7 +38,6 @@ BUILD_FINGERPRINT := Huawei/TRG-AN00/TRG-AN00:11/RP1A.200720.011/root20221012155
 PRODUCT_BUILD_PROP_OVERRIDES += \
 <<<<<<< HEAD
     PRIVATE_BUILD_DESC="TRG-AN00-user 11 RP1A.200720.011 release-keys"
-=======
     PRIVATE_BUILD_DESC="TRG-AN00-user 11 RP1A.200720.011 release-keys" \
     ro.build.id=RP1A.200720.011 \
     ro.build.version.release=11 \
